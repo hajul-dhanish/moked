@@ -1,11 +1,11 @@
-class Data {
+class Albumn {
   final String username;
   final String content;
 
-  Data({required this.username, required this.content});
+  Albumn({required this.username, required this.content});
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
+  factory Albumn.fromJson(Map<String, dynamic> json) {
+    return Albumn(
       username: json['username'],
       content: json['content'],
     );

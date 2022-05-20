@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'model/data.dart';
 import 'model/model.dart';
 
@@ -16,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Future<List<Data>> futureData;
+  late Future<List<Albumn>> futureData;
 
   @override
   void initState() {
@@ -27,41 +26,46 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: true,
       title: 'Flutter Attendance',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Flutter Attendance'),
         ),
         body: Card(
-          child: FutureBuilder<List<Data>>(
+          child: FutureBuilder<List<Albumn>>(
             future: futureData,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<Data>? data = snapshot.data;
+                List<Albumn>? albumn = snapshot.data;
                 return SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: DataTable(
-                      columns: const [
-                        DataColumn(
-                          label: Text('username'),
-                        ),
-                        DataColumn(
-                          label: Text('content'),
-                        ),
-                      ],
-                      rows: data!
-                          .map((data) => DataRow(cells: [
-                                DataCell(Text(data.username)),
-                                DataCell(Text(data.content)),
-                              ]))
-                          .toList()),
+                  child: ListView.builder(
+                    itemCount: albumn?.length,
+                    itemBuilder: (context, data) {
+                      return DataTable(
+                          columns: const [
+                            DataColumn(
+                              label: Text('username'),
+                            ),
+                            DataColumn(
+                              label: Text('content'),
+                            ),
+                          ],
+                          rows: albumn!
+                              .map((data) => DataRow(cells: [
+                                    DataCell(Text(data.username)),
+                                    DataCell(Text(data.content)),
+                                  ]))
+                              .toList());
+                    },
+                  ),
                 );
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                return Center(child: Text("${snapshot.error}"));
               }
-              // By default show a loading spinner.
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             },
           ),
         ),
@@ -69,3 +73,25 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+// Datatable 
+// SizedBox(
+//         height: MediaQuery.of(context).size.height,
+//         width: MediaQuery.of(context).size.width,
+//         child: DataTable(
+//             columns: const [
+//               DataColumn(
+//                 label: Text('username'),
+//               ),
+//               DataColumn(
+//                 label: Text('content'),
+//               ),
+//             ],
+//             rows: data!
+//                 .map((data) => DataRow(cells: [
+//                       DataCell(Text(data.username)),
+//                       DataCell(Text(data.content)),
+//                     ]))
+//                 .toList()),
+//       );
