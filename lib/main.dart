@@ -43,22 +43,26 @@ class _MyAppState extends State<MyApp> {
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
                     itemCount: albumn?.length,
-                    itemBuilder: (context, data) {
-                      return DataTable(
-                          columns: const [
-                            DataColumn(
-                              label: Text('username'),
-                            ),
-                            DataColumn(
-                              label: Text('content'),
-                            ),
-                          ],
-                          rows: albumn!
-                              .map((data) => DataRow(cells: [
-                                    DataCell(Text(data.username)),
-                                    DataCell(Text(data.content)),
-                                  ]))
-                              .toList());
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: DataTable(
+                            columns: const [
+                              DataColumn(
+                                label: Text('username'),
+                              ),
+                              DataColumn(
+                                label: Text('content'),
+                              ),
+                            ],
+                            rows: albumn!
+                                .map((data) => DataRow(cells: [
+                                      DataCell(Text(data.username)),
+                                      DataCell(Text(data.content)),
+                                    ]))
+                                .toList()),
+                      );
                     },
                   ),
                 );
